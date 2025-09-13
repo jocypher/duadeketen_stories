@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop   # auto-creates tables from entities (use 'validate' in prod)
+      ddl-auto: update   # auto-creates tables from entities (use 'validate' in prod)
     show-sql: true
     properties:
       hibernate:
