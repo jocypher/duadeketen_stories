@@ -6,6 +6,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.common.BitMatrix;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -21,11 +22,18 @@ public class QrCodeService {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix matrix = qrCodeWriter.encode(storyUrl, BarcodeFormat.QR_CODE, 250, 250);
 
-        File tempFile = File.createTempFile("qrcode-" + pageNumber, ".png");
-        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-            MatrixToImageWriter.writeToStream(matrix, "PNG", fos);
-        }
+        // Write QR code to memory
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(matrix, "PNG", baos);
+        byte[] qrBytes = baos.toByteArray();
 
-        return supabaseService.uploadFile(tempFile, "qrcodes/page-" + pageNumber + ".png");
+        // Upload to Supabase directly from memory
+        return supabaseService.uploadFile(
+                "qrcodes/page-" + pageNumber + ".png",
+                qrBytes,
+                "image/png"
+        );
     }
+
+
 }
