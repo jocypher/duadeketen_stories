@@ -4,8 +4,6 @@ import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 
 @Service
 public class TtsService {
@@ -22,28 +20,31 @@ public class TtsService {
 
     public String generateSpeech(int pageNumber, String gaText, String existingAudioUrl) throws Exception {
         if (existingAudioUrl != null && !existingAudioUrl.isEmpty()) {
-            return existingAudioUrl;
+            return existingAudioUrl; // already generated
         }
 
+        // Send Ga text to Flask
         RequestBody body = RequestBody.create(gaText, MediaType.parse("text/plain"));
         Request request = new Request.Builder()
                 .url(flaskTtsUrl + "/generate-speech")
                 .post(body)
                 .build();
 
-        File tempFile = File.createTempFile("story-" + pageNumber, ".mp3");
-
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 throw new RuntimeException("TTS generation failed: " + response);
             }
-            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-                if (response.body() != null) {
-                    fos.write(response.body().bytes());
-                }
-            }
-        }
 
-        return supabaseService.uploadFile(tempFile, "audio/story-" + pageNumber + ".mp3");
+            // Get audio bytes directly from Flask response
+            byte[] audioBytes = response.body().bytes();
+
+            // Upload to Supabase as mp3
+            return supabaseService.uploadFile(
+                    "audio/story-" + pageNumber + ".mp3",
+                    audioBytes,
+                    "audio/mpeg"
+            );
+        }
     }
 }
+

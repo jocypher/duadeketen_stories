@@ -33,8 +33,10 @@ public class StoryService {
             story.setQrCodeUrl(qrUrl);
         }
 
-//        String audioUrl = ttsService.generateSpeech(pageNumber, story.getGaText(), story.getAudioUrl());
-//        story.setAudioUrl(audioUrl);
+//        if (story.getAudioUrl() == null || story.getAudioUrl().isEmpty()) {
+//            String audioUrl = ttsService.generateSpeech(pageNumber, story.getGaText(), story.getAudioUrl());
+//            story.setAudioUrl(audioUrl);
+//        }
 
         return repository.save(story);
     }
