@@ -28,7 +28,7 @@ public class StoryService {
                 .orElseThrow(() -> new StoryNotFoundException("page " + pageNumber));
 
         if (story.getQrCodeUrl() == null || story.getQrCodeUrl().isEmpty()) {
-            String storyUrl = "http://172.20.10.2:8080/api/stories/page/" + pageNumber;
+            String storyUrl = "https://duadeketen-stories.onrender.com/api/stories/page/" + pageNumber;
             String qrUrl = qrCodeService.generateQrCode(pageNumber, storyUrl);
             story.setQrCodeUrl(qrUrl);
         }
