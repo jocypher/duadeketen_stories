@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: duadeketen-stories
+    env: native
+    buildCommand: |
+      # Skip any color setup and go straight to Java
+      apt-get update -qq
+      apt-get install -y -qq openjdk-17-jdk
+      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+      export PATH=$JAVA_HOME/bin:$PATH
+      chmod +x mvnw
+      ./mvnw clean package -DskipTests
+    startCommand: |
+      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+      export PATH=$JAVA_HOME/bin:$PATH
+      java -jar target/*.jar
