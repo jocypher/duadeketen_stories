@@ -35,3 +35,6 @@ logging:
   level:
     root: INFO
     gh.duadeketet3n.storybook: DEBUG
+
+tts:
+  mode: test
