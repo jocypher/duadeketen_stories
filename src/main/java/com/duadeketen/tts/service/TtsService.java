@@ -39,17 +39,18 @@ public class TtsService {
             return existingAudioUrl;
         }
 
-        if ("TEST".equalsIgnoreCase(ttsMode)) {
-            File sampleFile = new File("src/main/resources/audios/sample-audio.mp3");
-            return supabaseService.uploadFile(
-                    sampleFile,
-                    "audio/test-story-" + pageNumber + ".mp3"
-            );
-        } else if ("FLASK".equalsIgnoreCase(ttsMode)) {
+//        if ("TEST".equalsIgnoreCase(ttsMode)) {
+//            File sampleFile = new File("src/main/resources/audios/sample-audio.mp3");
+//            return supabaseService.uploadFile(
+//                    sampleFile,
+//                    "audio/test-story-" + pageNumber + ".mp3"
+//            );
+//        }
+//        else if ("FLASK".equalsIgnoreCase(ttsMode)) {
             return handleFlaskMode(pageNumber, gaText);
-        } else {
-            throw new IllegalStateException("Unknown tts.mode: " + ttsMode);
-        }
+//        } else {
+//            throw new IllegalStateException("Unknown tts.mode: " + ttsMode);
+//        }
     }
 
     private String handleFlaskMode(int pageNumber, String gaText) throws Exception {
