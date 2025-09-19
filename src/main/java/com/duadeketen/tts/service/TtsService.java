@@ -18,7 +18,7 @@ public class TtsService {
     @Value("${flask.tts.url}")
     private String flaskTtsUrl;
 
-    @Value("${tts.mode:TEST}")
+    @Value("${tts.mode:FLASK}")
     private String ttsMode;
 
     private final OkHttpClient client;
