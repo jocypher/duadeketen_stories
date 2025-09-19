@@ -35,9 +35,9 @@ public class TtsService {
 
     public String generateSpeech(int pageNumber, String gaText, String existingAudioUrl) throws Exception {
         // If audio already exists, reuse it
-        if (existingAudioUrl != null && !existingAudioUrl.isEmpty()) {
-            return existingAudioUrl;
-        }
+//        if (existingAudioUrl != null && !existingAudioUrl.isEmpty()) {
+//            return existingAudioUrl;
+//        }
 
         if ("TEST".equalsIgnoreCase(ttsMode)) {
             return handleTestMode(pageNumber);
