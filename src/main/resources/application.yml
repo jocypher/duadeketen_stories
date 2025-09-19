@@ -37,4 +37,4 @@ logging:
     gh.duadeketet3n.storybook: DEBUG
 
 tts:
-  mode: flask
+  mode: test
