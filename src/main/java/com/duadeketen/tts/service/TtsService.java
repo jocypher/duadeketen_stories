@@ -68,7 +68,7 @@ public class TtsService {
         );
 
         Request request = new Request.Builder()
-                .url("https://ga-tts-api-mf6o.onrender.com/api/synthesize")
+                .url("https://ga-tts-api.onrender.com/api/synthesize")
                 .post(body)
                 .addHeader("Content-Type", "application/json")
                 .build();
